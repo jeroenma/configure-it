@@ -1,0 +1,16 @@
+---
+
+- name: Load variables based on the OS type or default if not found.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - '{{ansible_distribution}}.yaml'
+        - '{{ansible_os_family}}.yaml'
+        - default.yaml
+      paths:
+        - 'vars'
+
+- import_tasks: "{{ role_path }}/tasks/hosts.yaml"
+  when:
+    - hosts is defined

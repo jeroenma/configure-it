@@ -1,0 +1,22 @@
+---
+- name: Generate IPv4
+  ansible.builtin.lineinfile:
+    path: "{{ hosts_config_file }}"
+    regexp: '^{{ host_item.ipv4 }}\s*{{ host_item.hostname }}\s*{% if host_item.aliases is defined %}{{ host_item.aliases|join(" ") }}{% endif %}.*$'
+    line: '{{ host_item.ipv4 }} {{ host_item.hostname }} {% if host_item.aliases is defined %}{{ host_item.aliases|join(" ") }}{% endif %}'
+  become: true
+  when:
+    - host_item.ipv4 is defined
+    - host_item.hostname is defined
+    - host_item.disabled is not defined
+
+- name: Generate IPv6
+  ansible.builtin.lineinfile:
+    path: "{{ hosts_config_file }}"
+    regexp: '^{{ host_item.ipv6 }}\s*{{ host_item.hostname }}\s*{% if host_item.aliases is defined %}{{ host_item.aliases|join(" ") }}{% endif %}.*$'
+    line: '{{ host_item.ipv6 }} {{ host_item.hostname }} {% if host_item.aliases is defined %}{{ host_item.aliases|join(" ") }}{% endif %}'
+  become: true
+  when:
+    - host_item.ipv6 is defined
+    - host_item.hostname is defined
+    - host_item.disabled is not defined

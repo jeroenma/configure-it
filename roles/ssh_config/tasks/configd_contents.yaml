@@ -1,0 +1,10 @@
+---
+- name: Create files in config.d directory
+  include_tasks: manage_host_config_file.yaml
+  loop: "{{ hosts }}"
+  loop_control:
+    label: '{{ host_item.hostname }} (HOST)'
+    loop_var: host_item
+  when:
+    - host_item.ssh is defined
+    - host_item.ssh.host is defined

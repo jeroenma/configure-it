@@ -1,0 +1,42 @@
+---
+- name: Remove disabled files
+  ansible.builtin.file:
+    path: "{{ ssh_config_include_directory }}/{{ host_item.ssh.host }}.host"
+    state: absent
+  when:
+    - host_item.ssh.disabled is defined
+    - host_item.ssh.disabled == True
+
+- name: Create file for host item
+  ansible.builtin.copy:
+    content: |
+      Host {{ host_item.ssh.host }}
+        Hostname {{ host_item.hostname }}
+      {% if host_item.ssh.user is defined %}
+        User {{ host_item.ssh.user }}
+      {% else %}
+        # User <not defined>
+      {% endif %}
+    dest: "{{ ssh_config_include_directory }}/{{ host_item.ssh.host }}.host"
+  when:
+    - host_item.ssh.disabled is not defined
+
+- name: Create file for alias item
+  ansible.builtin.copy:
+    content: |
+      Host {{ alias_item }}
+        Hostname {{ host_item.hostname }}
+      {% if host_item.ssh.user is defined %}
+        User {{ host_item.ssh.user }}
+      {% else %}
+        # User <not defined>
+      {% endif %}
+    dest: "{{ ssh_config_include_directory }}/{{ alias_item }}.alias"
+  when:
+    - host_item.ssh.disabled is not defined
+    - host_item.aliases is defined
+  loop:
+    "{{ host_item.aliases }}"
+  loop_control:
+    label: '{{ alias_item }} (ALIAS)'
+    loop_var: alias_item

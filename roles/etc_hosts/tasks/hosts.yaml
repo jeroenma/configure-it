@@ -1,0 +1,8 @@
+---
+
+- name: Adding hosts to hosts file in etc directory
+  include_tasks: manage_lineitem.yaml
+  loop: "{{ hosts }}"
+  loop_control:
+    label: '{{ host_item.hostname }}'
+    loop_var: host_item

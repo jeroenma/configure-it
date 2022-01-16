@@ -1,0 +1,19 @@
+---
+- name: Playbook - Configure IT
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Load a variable file based on the OS type or a default if not found.
+      include_vars: hosts.yaml
+      tags:
+        - ssh_config
+        - etc_hosts
+
+    - import_role:
+        name: ssh_config
+      tags: ssh_config
+
+    - import_role:
+        name: etc_hosts
+      tags: etc_hosts

@@ -1,0 +1,38 @@
+---
+- name: Create .ssh directory
+  ansible.builtin.file:
+    path: '{{ ssh_config_base_directory }}'
+    mode: '0700'
+    state: directory
+
+- name: Create include directory
+  ansible.builtin.file:
+    path: '{{ ssh_config_include_directory }}'
+    mode: '0700'
+    state: directory
+
+- name: Check if config file in .ssh exists
+  stat:
+    path: '{{ ssh_config_file }}'
+  register: ssh_config_file_status
+
+- name: "Modify .ssh/config file to import include directory"
+  ansible.builtin.replace:
+    path: '{{ ssh_config_file }}'
+    regexp: '^include .*$'
+    replace: 'include {{ ssh_config_include_directory }}/*'
+  when: ssh_config_file_status.stat.exists
+
+- name: "Modify .ssh/config file to import include directory"
+  ansible.builtin.lineinfile:
+    path: '{{ ssh_config_file }}'
+    line: 'include {{ ssh_config_include_directory }}/*'
+    create: yes
+  when: not ssh_config_file_status.stat.exists
+
+- name:  "On MacOSX we use Keychain"
+  ansible.builtin.lineinfile:
+    path: '{{ ssh_config_file }}'
+    regexp: '^UseKeychain.*$'
+    line: 'UseKeychain yes'
+  when: ansible_distribution == "MacOSX"
