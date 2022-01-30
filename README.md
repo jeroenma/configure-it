@@ -16,9 +16,9 @@ following tags can be used:
 
 Creates files for specified hosts in `~/.ssh/config.d/<hostname>.host` and `~/.ssh/config.d/<alias for host>.alias`
 Confiured is these files are:
- - Hostname to connect to.
- - User name to connect to host, when specified.
- - IdentityFile to be used, when specified.
+ - Hostname (hostname) to connect to.
+ - Username (user) to connect to host, when specified.
+ - IdentityFile (identityfile) to be used, when specified.
 
 Example: To configure only the SSH part use following command `ansible-playbook -K -t ssh_config configure-it.yaml`
 
