@@ -18,7 +18,7 @@ Creates files for specified hosts in `~/.ssh/config.d/<hostname>.host` and `~/.s
 Confiured is these files are:
  - Hostname to connect to.
  - User name to connect to host, when specified.
- - AuthorizedKey to be used, when specified.
+ - IdentityFile to be used, when specified.
 
 Example: To configure only the SSH part use following command `ansible-playbook -K -t ssh_config configure-it.yaml`
 
