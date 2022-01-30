@@ -25,7 +25,7 @@
 - name: Add IdentityFile to host item
   ansible.builtin.lineinfile:
     path: "{{ ssh_config_include_directory }}/{{ host_item.ssh.host }}.host"
-    line: "  AuthorizedKey ~/.ssh/{{host_item.ssh.identityfile}}"
+    line: "  IdentityFile ~/.ssh/{{host_item.ssh.identityfile}}"
   when:
     - host_item.ssh.identityfile is defined
 
@@ -53,7 +53,7 @@
 - name: Add IdentityFile to alias item
   ansible.builtin.lineinfile:
     path: "{{ ssh_config_include_directory }}/{{ alias_item }}.alias"
-    line: "  AuthorizedKey ~/.ssh/{{host_item.ssh.identityfile}}"
+    line: "  IdentityFile ~/.ssh/{{host_item.ssh.identityfile}}"
   when:
     - host_item.ssh.identityfile is defined
     - host_item.aliases is defined    
