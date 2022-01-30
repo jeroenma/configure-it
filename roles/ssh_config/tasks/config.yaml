@@ -23,10 +23,11 @@
     replace: 'include {{ ssh_config_include_directory }}/*'
   when: ssh_config_file_status.stat.exists
 
-- name: "Modify .ssh/config file to import include directory"
+- name: "Create .ssh/config file and add to import include directory"
   ansible.builtin.lineinfile:
     path: '{{ ssh_config_file }}'
     line: 'include {{ ssh_config_include_directory }}/*'
+    mode: '0700'
     create: yes
   when: not ssh_config_file_status.stat.exists
 

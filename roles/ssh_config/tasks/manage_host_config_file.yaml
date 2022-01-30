@@ -18,6 +18,7 @@
         # User <not defined>
       {% endif %}
     dest: "{{ ssh_config_include_directory }}/{{ host_item.ssh.host }}.host"
+    mode: '0600'
   when:
     - host_item.ssh.disabled is not defined
 
@@ -32,6 +33,7 @@
         # User <not defined>
       {% endif %}
     dest: "{{ ssh_config_include_directory }}/{{ alias_item }}.alias"
+    mode: '0600'
   when:
     - host_item.ssh.disabled is not defined
     - host_item.aliases is defined

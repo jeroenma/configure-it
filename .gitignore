@@ -1,1 +1,55 @@
+# Keep data local
 vars/hosts.yaml
+
+# Eclipse-based IDEs.
+**/.apt_generated
+**/.classpath
+**/.factorypath
+**/.metadata/
+**/.project
+**/.pydevproject
+**/.settings/
+**/.springBeans
+**/.sts4-cache/
+
+# JetBrains IDEs.
+**/.idea/
+**/*.iws
+**/*.iml
+**/*.ipr
+**/out
+
+# Sublime Text.
+**/*.sublime-project
+**/*.sublime-workspace
+
+# Visual Studio Code.
+**/.vscode/
+**/.history
+**/*.code-workspace
+
+# macOS.
+**/.DS_Store
+
+# Windows.
+**/Thumbs.db
+
+# Python.
+**/*.py[cod]
+**/__pycache__/
+**/.venv/
+**/venv/
+.venv
+
+# Setuptools.
+build/
+dist/
+**/*.egg-info/
+
+# Archives.
+**/.gz
+**/.bz2
+**/.xz
+**/.tar
+**/.tgz
+**/.zip

@@ -8,7 +8,7 @@
   when:
     - host_item.ipv4 is defined
     - host_item.hostname is defined
-    - host_item.disabled is not defined
+    - host_item.hosts.disabled is not defined
 
 - name: Generate IPv6
   ansible.builtin.lineinfile:
@@ -19,4 +19,4 @@
   when:
     - host_item.ipv6 is defined
     - host_item.hostname is defined
-    - host_item.disabled is not defined
+    - host_item.hosts.disabled is not defined
