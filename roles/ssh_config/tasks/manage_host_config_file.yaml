@@ -22,6 +22,13 @@
   when:
     - host_item.ssh.disabled is not defined
 
+- name: Add IdentityFile to host item
+  ansible.builtin.lineinfile:
+    path: "{{ ssh_config_include_directory }}/{{ host_item.ssh.host }}.host"
+    line: "  AuthorizedKey ~/.ssh/{{host_item.ssh.identityfile}}"
+  when:
+    - host_item.ssh.identityfile is defined
+
 - name: Create file for alias item
   ansible.builtin.copy:
     content: |
@@ -37,6 +44,19 @@
   when:
     - host_item.ssh.disabled is not defined
     - host_item.aliases is defined
+  loop:
+    "{{ host_item.aliases }}"
+  loop_control:
+    label: '{{ alias_item }} (ALIAS)'
+    loop_var: alias_item
+
+- name: Add IdentityFile to alias item
+  ansible.builtin.lineinfile:
+    path: "{{ ssh_config_include_directory }}/{{ alias_item }}.alias"
+    line: "  AuthorizedKey ~/.ssh/{{host_item.ssh.identityfile}}"
+  when:
+    - host_item.ssh.identityfile is defined
+    - host_item.aliases is defined    
   loop:
     "{{ host_item.aliases }}"
   loop_control:

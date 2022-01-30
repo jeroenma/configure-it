@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -xv
+
 # Some globals.
 export ROOT_DIR="$(cd "$(dirname -- "${0}")" >/dev/null 2>&1 ; pwd -P)"
 export BASENAME="$(basename -- "${0}")"
